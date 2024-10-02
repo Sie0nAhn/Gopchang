@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>곱창팟 소개</title>
+  <style type="text/css">
+    @font-face {
+      font-family: 'Pretendard-Regular';
+      src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Paperlogy-8ExtraBold';
+      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+      font-weight: 800;
+      font-style: normal;
+    }
+    html {user-select: none; font-family: 'Pretendard-Regular'; letter-spacing: -0.05rem; line-height: 1.5;}
+    body, h1, h2, p, ul, li {margin: 0; padding: 0;}
+    body {background: black;}
+    header h1 {text-align: center; padding: 4rem 0rem; color: white; font-size: 4rem; font-family: 'Paperlogy-8ExtraBold';}
+    section {padding: 0rem 2rem;}
+    section ul {display: flex; flex-wrap: wrap; gap: 1rem;}
+    section li {list-style-type: none;}
+    section a {padding: 2rem 3rem; background: magenta; display: block; font-family: 'Paperlogy-8ExtraBold'; font-size: 2rem; cursor: pointer; color: white;}
+    section a:hover {background: #00FF00; color: black;}
+    footer {padding: 6rem; text-align: center;}
+    #modal {width: 600px; height: 600px; background: white; border-radius: 5px;
+            position: absolute; transform: translate(-50%, -50%); left: 50%; top: 50%;
+            padding: 4rem; box-shadow: 0px 0px 10px #555; display: none;}
+    #modal h2 {font-family: 'Paperlogy-8ExtraBold'; font-size: 2rem;}
+    #modal p, a {padding: 2rem 0rem; font-size: 2rem;}
+    #modal a {text-decoration: none;}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>곱창팟을 소개합니다.</h1>
+  </header>
+  <section>
+    <ul id="thumList"></ul>
+  </section>
+  
+  <div id="modal">
+    <h2 id="modalName"></h2>
+    <p id="modalDetails"></p>
+    <a id="modalLink" href="" target="_blank">👉더 알아보기</a>
+  </div>
+
+  <script type="text/javascript">
+    const webinter = [
+   {"name":"홍민아","city":"서울","designCategory":"편집,아이덴티티","food":"야구 입문","stNumber":22,"contents":"누구보다 다정한 여자가 바로 나야핑~","link":"https://www.instagram.com/goseozero/","":null},
+{"name":"이예은","city":"목동","designCategory":"????","food":"??????","stNumber":22,"contents":"잘지내니? 잘지내? 소식좀 줘.....","link":"https://www.instagram.com/moingzo/","":null},
+
+{"name":"안시언","city":"평택","designCategory":"UXUI","food":"천관사복","stNumber":22,"contents":"잘생긴 중국남자가 세상을 구한다","link":"https://www.instagram.com/_0sie0n_/","":null},
+
+{"name":"김슬아","city":"왕십리","designCategory":"서비스","food":"배드민턴","stNumber":22,"contents":"미니멀리즘은 최고의 미학이죠.","link":"https://www.instagram.com/h_jun342/","":null},
+{"name":"이다현","city":"공주","designCategory":"서비스/광고","food":"사연있는 수염있는 아저씨","stNumber":22,"contents":"나이가 많다고 다 좋아하는 게 아니에요......","link":"https://www.youtube.com/watch?v=3vup_iFpdL0","":null},
+{"name":"유예린","city":"수원","designCategory":"아이덴티티 ","food":"달달한 모든 것과 귀여운 것","stNumber":22,"contents":"이이이이잉 한 잔만 더 마셔줘요핑","link":"https://www.instagram.com/yulmu1/","":null},
+{"name":"김민솔","city":"분당/용인","designCategory":"아이덴티티","food":"아름다운 것들과 패션","stNumber":22,"contents":"적을 최소한으로, 적을 만들지 말자핑~","link":"https://www.instagram.com/llovvek/?next=%2F ","":null},
+{"name":"신채민","city":"화정","designCategory":"촬영","food":"영화와 뮤지컬","stNumber":22,"contents":"채식하고 위건강 챙깁시다","link":"https://youtu.be/zzMwyMteDJg?si=zUWxPu1r3iH_mpza","":null},
+{"name":"강민영","city":"진주","designCategory":"아이덴티티/편집","food":"애니메이션 은혼","stNumber":22,"contents":"아름답지 못한 건 상대할 가치가 없어요","link":"https://www.instagram.com/yourjini_lilsus/","":null},
+{"name":"정선하","city":"동해","designCategory":"일러스트레이션","food":"카게로우프로젝트와 해리포터","stNumber":22,"contents":"귀엽지만 의젓해요","link":"https://www.instagram.com/sum.mer_archive?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==","":null}
+
+]
+    const thumList = document.getElementById('thumList');
+    const modal = document.getElementById("modal");
+    const modalName = document.getElementById("modalName");
+    const modalDetails = document.getElementById("modalDetails");
+    const modalLink = document.getElementById("modalLink");
+
+    // Render the list items
+    for(let i = 0; i < webinter.length; i++) {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.textContent = webinter[i].name;
+      a.href = "#";
+      a.onclick = function() {
+        showModal(i); // Pass the current index
+      };
+      li.appendChild(a);
+      thumList.appendChild(li);
+    }
+
+    // Function to show the modal with the specific person's details
+    function showModal(index) {
+      const person = webinter[index];
+      modalName.textContent = `👋 안녕하세요. ${person.name}입니다.`;
+      modalDetails.innerHTML = `저는 ${person.city}에서 삽니다. 제가 좋아하는 디자인 분야는 ${person.designCategory}이며 좋아하는 것은 ${person.food}입니다. 서울과기대 시각디자인 전공 ${person.stNumber}입니다. ${person.contents}`;
+      modalLink.href = person.link;
+      modal.style.display = "block";
+    }
+
+    // Close modal on clicking outside or modal
+    modal.onclick = function() {
+      modal.style.display = "none";
+    };
+  </script>
+</body>
+<footer>템플릿 리터럴 예제&copy;2024. 이병학.</footer>
+</html>
+
+
